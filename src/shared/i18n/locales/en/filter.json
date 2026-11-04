@@ -1,1 +1,20 @@
-{}
+{
+	"common": {
+		"close": "Close"
+	},
+	"filters": {
+		"loading": "Loading…",
+		"loadError": "Failed to load filters",
+		"clickMe": "Click me!"
+	},
+	"filterModal": {
+		"title": "Filter",
+		"apply": "Apply",
+		"clearAll": "Clear all parameters"
+	},
+	"applyModal": {
+		"title": "Do you want to apply new filter",
+		"useOld": "Use old filter",
+		"applyNew": "Apply new filter"
+	}
+}

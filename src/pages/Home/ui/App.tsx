@@ -1,24 +1,51 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import ModalQuery from '@widgets/modalQuery'
+import { useQuery } from '@tanstack/react-query'
+import loadData from 'src/core/loadData'
+import useFiltersState from 'src/core/main.state'
+import useModalState from 'src/core/modal.state'
 
-import Button from '@components/button'
+import Button from '@pages/Home/ui/button'
+
+import ApplyModal from './applyModal'
+import CheckboxModal from './checkboxModal'
 
 export const App = () => {
-	const [modal, setModal] = useState(false)
-	return (
-		<div className="w-full h-dvh flex items-center justify-center">
-			<Button
-				name="Click me"
-				onClick={() => setModal(!modal)}
-			/>
+	const { t } = useTranslation('filter')
+	const open = useModalState(state => state.open)
+	const seed = useFiltersState(state => state.seed)
 
-			<div>
-				<ModalQuery
-					open={modal}
-					onClose={() => setModal(false)}
-				/>
-			</div>
+	const {
+		data: filters,
+		isPending,
+		isError
+	} = useQuery({
+		queryKey: ['filters'],
+		queryFn: loadData
+	})
+
+	useEffect(() => {
+		if (filters) {
+			seed(filters)
+		}
+	}, [filters, seed])
+
+	if (isPending) {
+		return <div>{t('filters.loading')}</div>
+	}
+	if (isError) {
+		return <div>{t('filters.loadError')}</div>
+	}
+
+	return (
+		<div className="flex h-dvh w-full items-center justify-center">
+			<Button onClick={() => open('checkbox-modal')}>
+				<span>{t('filters.clickMe')}</span>
+			</Button>
+
+			<CheckboxModal filtersData={filters} />
+			<ApplyModal />
 		</div>
 	)
 }
