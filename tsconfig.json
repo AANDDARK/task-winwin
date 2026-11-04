@@ -19,7 +19,7 @@
 			"@widgets/*": ["./src/widgets/*"],
 			"@shared/*": ["./src/shared/*"],
 			"@pages/*": ["./src/pages/*"],
-			"@states/*": ["./src/states/*"],
+			"@states/*": ["./src/states/*"]
 		},
 
 		/* Linting */
